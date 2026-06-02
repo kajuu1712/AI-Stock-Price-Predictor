@@ -1,103 +1,54 @@
-# 📈 AI-Based Stock Price Predictor
-
-A machine learning project that predicts stock prices using historical data analysis and provides an interactive visualization dashboard.
-
----
-
 ## 🎯 Project Overview
 
-This project uses historical stock market data of **Apple Inc. (AAPL)** to build a machine learning model that predicts future stock prices. It includes data collection, preprocessing, model training, evaluation, and an interactive dashboard for visualization.
+This project uses historical stock market data to build a machine learning model that predicts stock closing prices and provides an interactive dashboard for visualization and analysis.
+
+The dashboard supports multiple stocks and allows users to explore historical trends, model predictions, trading volume, volatility, and yearly price distributions.
 
 **Internship Project | 2026**
 
 ---
 
-## 🛠️ Tech Stack
+## 🌐 Live Demo
 
-| Category | Tools |
-|----------|-------|
-| Language | Python 3.13 |
-| Data Collection | yfinance |
-| Data Processing | Pandas, NumPy |
-| Machine Learning | Scikit-learn |
-| Visualization | Matplotlib, Seaborn, Plotly |
-| Dashboard | Dash |
-| Environment | Jupyter Notebook, VS Code |
+**Dashboard Link:**
+[Add Your Render URL Here]
 
----
+Example:
 
-## 📁 Folder Structure
-
-```
-stock-predictor/
-│
-├── data/
-│   ├── raw/                  # Raw stock data downloaded from yfinance
-│   └── processed/            # Cleaned and feature-engineered data
-│
-├── notebooks/
-│   ├── 01_data_collection.ipynb      # Fetch stock data using yfinance
-│   ├── 02_data_exploration.ipynb     # EDA - charts, trends, statistics
-│   ├── 03_data_preprocessing.ipynb   # Cleaning, feature engineering
-│   ├── 04_model_building.ipynb       # Train ML model, evaluate accuracy
-│   └── 05_visualization.ipynb        # Final charts and visual insights
-│
-├── src/
-│   ├── data_loader.py        # Functions to fetch and save stock data
-│   ├── preprocessor.py       # Data cleaning and feature engineering
-│   ├── model.py              # ML model training and prediction
-│   └── visualizer.py         # Reusable chart functions
-│
-├── dashboard/
-│   └── app.py                # Interactive Dash web dashboard
-│
-├── models/
-│   └── stock_model.pkl       # Saved trained ML model
-│
-├── docs/
-│   └── project_report.pdf    # Final project report
-│
-├── requirements.txt           # All Python dependencies
-├── .gitignore
-└── README.md                  # Project documentation (this file)
+```text
+https://ai-stock-predictor.onrender.com
 ```
 
 ---
 
-## 🚀 How to Run This Project
+## 🚀 How to Run This Project Locally
 
-### Step 1 — Clone or Download the Project
+### Step 1 — Clone the Repository
+
 ```bash
-cd Desktop
+git clone <your-github-repository-url>
 cd stock-predictor
 ```
 
 ### Step 2 — Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 3 — Launch Jupyter Notebook
-```bash
-cd notebooks
-jupyter notebook
-```
+### Step 3 — Run the Dashboard
 
-### Step 4 — Run Notebooks in Order
-```
-01_data_collection.ipynb      ← Start here
-02_data_exploration.ipynb
-03_data_preprocessing.ipynb
-04_model_building.ipynb
-05_visualization.ipynb
-```
-
-### Step 5 — Run the Dashboard
 ```bash
-cd dashboard
 python app.py
 ```
-Then open your browser and go to: `http://localhost:8050`
+
+### Step 4 — Open in Browser
+
+```text
+http://localhost:8050
+```
+
+The dashboard will automatically download stock data from Yahoo Finance and display interactive charts.
 
 ---
 
@@ -105,7 +56,7 @@ Then open your browser and go to: `http://localhost:8050`
 
 ```
 Step 1: Data Collection
-    └── Download AAPL historical data (2015–2024) using yfinance
+    └── Download historical stock data using yfinance
 
 Step 2: Data Exploration (EDA)
     └── Analyze stock trends, visualize patterns, study volatility,
@@ -113,75 +64,69 @@ Step 2: Data Exploration (EDA)
 
 Step 3: Data Preprocessing
     └── Clean missing values, scale data, create useful features
-        (Moving Averages, Daily Range, RSI, etc.), and prepare
+        (Moving Averages, Daily Range, etc.), and prepare
         the dataset for machine learning
 
 Step 4: Model Building
     └── Train Linear Regression model to predict closing prices
-    └── Evaluate using MAE, RMSE, R² Score
+    └── Evaluate using MAE and R² Score
 
 Step 5: Visualization
     └── Plot actual vs predicted prices
-    └── Interactive charts using Plotly
+    └── Create interactive charts using Plotly
 
 Step 6: Dashboard
-    └── Dash web app showing live predictions and charts
+    └── Multi-stock Dash web application
+    └── Interactive visualizations and prediction lookup
 ```
 
 ---
 
-## 📈 Stock Details
+## 📈 Supported Stocks
 
-| Detail | Info |
-|--------|------|
-| Stock | Apple Inc. |
-| Ticker Symbol | AAPL |
-| Data Source | Yahoo Finance (via yfinance) |
-| Historical Range | 2015 – 2024 |
-| Prediction Target | Closing Price |
+| Company                   | Ticker      |
+| ------------------------- | ----------- |
+| Apple Inc.                | AAPL        |
+| Microsoft                 | MSFT        |
+| Google (Alphabet)         | GOOGL       |
+| Reliance Industries       | RELIANCE.NS |
+| Tata Consultancy Services | TCS.NS      |
 
 ---
 
-## 🤖 Machine Learning Model
+## 📊 Dashboard Features
 
-| Detail | Info |
-|--------|------|
-| Algorithm | Linear Regression |
-| Library | Scikit-learn |
-| Features Used | Open, High, Low, Volume, Moving Averages |
-| Target Variable | Close Price (next day) |
-| Evaluation Metrics | MAE, RMSE, R² Score |
+* 📈 Historical Price Chart with 50-Day & 200-Day Moving Averages
+* 🤖 Actual vs Predicted Price Comparison
+* 📊 Trading Volume Analysis
+* 📏 Daily Volatility (High − Low Range)
+* 📅 Yearly Price Distribution Box Plots
+* 🔮 Date-wise Prediction Viewer
+* 📌 Multi-Stock Selection Support
 
 ---
 
 ## 📉 Evaluation Metrics Explained
 
-- **MAE (Mean Absolute Error)** — Average error in price prediction (lower is better)
-- **RMSE (Root Mean Squared Error)** — Penalizes large errors more (lower is better)
-- **R² Score** — How well the model fits the data (closer to 1.0 is better)
+* **MAE (Mean Absolute Error)** — Average prediction error (lower is better)
+* **R² Score** — Indicates how well the model explains stock price variation (closer to 1 is better)
+
+---
+
+## ☁️ Deployment
+
+The dashboard is deployed on **Render** and can be accessed directly through the live link above.
 
 ---
 
 ## 🔮 Future Improvements
 
-- [ ] Add LSTM (Deep Learning) model for better accuracy
-- [ ] Predict multiple stocks simultaneously
-- [ ] Add live/real-time stock price fetching
-- [ ] Deploy dashboard to web (Heroku / Render)
-- [ ] Add news sentiment analysis for better predictions
+* [ ] Add LSTM (Deep Learning) model
+* [ ] Real-time stock data streaming
+* [ ] Technical indicators (RSI, MACD, Bollinger Bands)
+* [ ] Stock comparison dashboard
+* [ ] News sentiment analysis
+* [ ] Portfolio tracking system
 
----
-
-## 👩‍💻 Author
-
-**Kajal**
-Internship Project — 2026
-
----
-
-## 📚 References
-
-- [yfinance Documentation](https://pypi.org/project/yfinance/)
-- [Scikit-learn Documentation](https://scikit-learn.org/)
-- [Plotly Dash Documentation](https://dash.plotly.com/)
-- [Yahoo Finance — AAPL](https://finance.yahoo.com/quote/AAPL)
+```
+```
