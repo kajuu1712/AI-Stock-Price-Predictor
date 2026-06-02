@@ -34,33 +34,53 @@ def get_stock_data(ticker):
         progress=False
     )
 
+    print("\n==============================")
+    print("Ticker:", ticker)
+    print("Downloaded Shape:", df.shape)
+    print("Columns Before Processing:")
     print(df.columns)
 
-    # Handle newer yfinance MultiIndex columns
+    if df.empty:
+        raise Exception(f"No data returned for {ticker}")
+
+    # Handle MultiIndex from newer yfinance
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.get_level_values(0)
 
-    # Keep only required columns
+    print("Columns After Flattening:")
+    print(df.columns.tolist())
+
     required_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
 
-    for col in required_cols:
-        if col not in df.columns:
-            raise Exception(f"Missing column: {col}")
+    missing = [col for col in required_cols if col not in df.columns]
 
-    df = df[required_cols]
+    if missing:
+        raise Exception(f"Missing columns: {missing}")
+
+    df = df[required_cols].copy()
+
+    print("Shape After Selecting Columns:", df.shape)
 
     df.index = pd.to_datetime(df.index)
 
-    # Add features
-    df['MA_50'] = df['Close'].rolling(window=50).mean()
-    df['MA_200'] = df['Close'].rolling(window=200).mean()
+    # Features
+    df['MA_50'] = df['Close'].rolling(50).mean()
+    df['MA_200'] = df['Close'].rolling(200).mean()
     df['Daily_Range'] = df['High'] - df['Low']
     df['Year'] = df.index.year
 
-    # Remove rows with NaN values
+    print("Shape Before dropna:", df.shape)
+
     df = df.dropna()
 
-    # Features and Target
+    print("Shape After dropna:", df.shape)
+
+    if len(df) == 0:
+        raise Exception(
+            "DataFrame became empty after dropna(). "
+            "Check downloaded columns/data."
+        )
+
     features = [
         'Open',
         'High',
@@ -74,23 +94,20 @@ def get_stock_data(ticker):
     X = df[features]
     y = df['Close']
 
-    # Scale data
+    print("X Shape:", X.shape)
+
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
 
-    # Train model
     model = LinearRegression()
     model.fit(X_scaled, y)
 
-    # Predictions
     df['Predicted'] = model.predict(X_scaled)
 
-    # Metrics
     r2 = round(r2_score(y, df['Predicted']) * 100, 2)
     mae = round(mean_absolute_error(y, df['Predicted']), 2)
 
     return df, r2, mae
-
 
 # ── 3. HELPER — STAT CARD ───────────────────
 def make_card(title, value, color):
