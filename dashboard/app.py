@@ -30,15 +30,15 @@ def get_stock_data(ticker):
     print("Downloading:", ticker)
 
     df = yf.download(
-        ticker,
-        start="2015-01-01",
-        end="2024-12-31",
-        auto_adjust=False,
-        progress=False
-    )
+    ticker,
+    period="10y",
+    progress=False,
+    threads=False
+)
 
-    print("Downloaded shape:", df.shape)
-    print("Columns:", df.columns)
+    print("Ticker:", ticker)
+    print("Shape:", df.shape)
+    print(df.tail())
 
     if len(df) > 0:
         print(df.head())
