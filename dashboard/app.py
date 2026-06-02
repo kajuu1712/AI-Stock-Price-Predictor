@@ -34,11 +34,9 @@ def get_stock_data(ticker):
         progress=False
     )
 
-    print("\n==============================")
     print("Ticker:", ticker)
-    print("Downloaded Shape:", df.shape)
-    print("Columns Before Processing:")
-    print(df.columns)
+    print("Shape:", df.shape)
+    print(df.head())
 
     if df.empty:
         raise Exception(f"No data returned for {ticker}")
@@ -257,15 +255,21 @@ app.layout = html.Div([
     Input('stock-dropdown',    'value')
 )
 def update_stock(ticker):
+    print("=== CALLBACK STARTED ===")
+    print("Ticker:", ticker)
+
     name = STOCKS.get(ticker, ticker)
 
     try:
+        print("Calling get_stock_data...")
         df, r2, mae = get_stock_data(ticker)
+        print("Returned from get_stock_data")
+
     except Exception as e:
-        empty = go.Figure()
-        empty.update_layout(template='plotly_dark', paper_bgcolor='#16213e',
-                            plot_bgcolor='#16213e')
-        return [], empty, empty, empty, empty, empty, [], None, "Error loading data", f"❌ {str(e)}"
+        print("ERROR:", str(e))
+        raise
+
+    print("Creating cards...")
 
     # ── Stat Cards ──────────────────────────
     cards = [
