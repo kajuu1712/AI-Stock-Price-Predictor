@@ -25,37 +25,73 @@ STOCKS = {
 
 # ── 2. FUNCTION TO LOAD & TRAIN ANY STOCK ───
 def get_stock_data(ticker):
-    df = yf.download(ticker, start="2015-01-01", end="2024-12-31")
 
-    # Flatten multi-level columns from yfinance
-    df = df.iloc[1:]
-    df.columns = ['Close', 'High', 'Low', 'Open', 'Volume']
+    df = yf.download(
+        ticker,
+        start="2015-01-01",
+        end="2024-12-31",
+        auto_adjust=False,
+        progress=False
+    )
+
+    # Handle newer yfinance MultiIndex columns
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+
+    # Keep only required columns
+    df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
+
     df.index = pd.to_datetime(df.index)
-    df = df.astype(float)
 
     # Add features
-    df['MA_50']       = df['Close'].rolling(50).mean()
-    df['MA_200']      = df['Close'].rolling(200).mean()
+    df['MA_50'] = df['Close'].rolling(window=50).mean()
+    df['MA_200'] = df['Close'].rolling(window=200).mean()
     df['Daily_Range'] = df['High'] - df['Low']
-    df['Year']        = df.index.year
+    df['Year'] = df.index.year
+
+    # Remove rows with NaN values
     df = df.dropna()
 
+    # Features and Target
+    features = [
+        'Open',
+        'High',
+        'Low',
+        'Volume',
+        'MA_50',
+        'MA_200',
+        'Daily_Range'
+    ]
+
+    X = df[features]
+    y = df['Close']
+
+    # Scale data
+    scaler = MinMaxScaler()
+    X_scaled = scaler.fit_transform(X)
+
     # Train model
-    features  = ['Open', 'High', 'Low', 'Volume', 'MA_50', 'MA_200', 'Daily_Range']
-    X         = df[features]
-    y         = df['Close']
-    scaler    = MinMaxScaler()
-    X_scaled  = scaler.fit_transform(X)
-    model     = LinearRegression()
+    model = LinearRegression()
     model.fit(X_scaled, y)
+
+    # Predictions
     df['Predicted'] = model.predict(X_scaled)
 
-    # Accuracy metrics
-    r2  = round(r2_score(y, df['Predicted']) * 100, 2)
+    # Metrics
+    r2 = round(r2_score(y, df['Predicted']) * 100, 2)
     mae = round(mean_absolute_error(y, df['Predicted']), 2)
 
     return df, r2, mae
 
+df = yf.download(
+    ticker,
+    start="2015-01-01",
+    end="2024-12-31",
+    auto_adjust=False,
+    progress=False
+)
+
+print("Columns:", df.columns)
 
 # ── 3. HELPER — STAT CARD ───────────────────
 def make_card(title, value, color):
