@@ -267,9 +267,26 @@ def update_stock(ticker):
 
     except Exception as e:
         print("ERROR:", str(e))
-        raise
 
-    print("Creating cards...")
+        empty = go.Figure()
+        empty.update_layout(
+            template='plotly_dark',
+            paper_bgcolor='#16213e',
+            plot_bgcolor='#16213e'
+        )
+
+        return (
+            [],
+            empty,
+            empty,
+            empty,
+            empty,
+            empty,
+            [],
+            None,
+            "Error loading data",
+            f"❌ {str(e)}"
+        )
 
     # ── Stat Cards ──────────────────────────
     cards = [
