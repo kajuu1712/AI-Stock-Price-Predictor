@@ -34,12 +34,20 @@ def get_stock_data(ticker):
         progress=False
     )
 
+    print(df.columns)
+
     # Handle newer yfinance MultiIndex columns
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.get_level_values(0)
 
     # Keep only required columns
-    df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
+    required_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
+
+    for col in required_cols:
+        if col not in df.columns:
+            raise Exception(f"Missing column: {col}")
+
+    df = df[required_cols]
 
     df.index = pd.to_datetime(df.index)
 
@@ -83,15 +91,6 @@ def get_stock_data(ticker):
 
     return df, r2, mae
 
-df = yf.download(
-    ticker,
-    start="2015-01-01",
-    end="2024-12-31",
-    auto_adjust=False,
-    progress=False
-)
-
-print("Columns:", df.columns)
 
 # ── 3. HELPER — STAT CARD ───────────────────
 def make_card(title, value, color):
