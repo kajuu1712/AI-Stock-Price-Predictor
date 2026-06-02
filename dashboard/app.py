@@ -26,6 +26,9 @@ STOCKS = {
 # ── 2. FUNCTION TO LOAD & TRAIN ANY STOCK ───
 def get_stock_data(ticker):
 
+    print("=" * 50)
+    print("Downloading:", ticker)
+
     df = yf.download(
         ticker,
         start="2015-01-01",
@@ -34,9 +37,13 @@ def get_stock_data(ticker):
         progress=False
     )
 
-    print("Ticker:", ticker)
-    print("Shape:", df.shape)
-    print(df.head())
+    print("Downloaded shape:", df.shape)
+    print("Columns:", df.columns)
+
+    if len(df) > 0:
+        print(df.head())
+    else:
+        print("DATAFRAME IS EMPTY")
 
     if df.empty:
         raise Exception(f"No data returned for {ticker}")
@@ -255,15 +262,15 @@ app.layout = html.Div([
     Input('stock-dropdown',    'value')
 )
 def update_stock(ticker):
-    print("=== CALLBACK STARTED ===")
-    print("Ticker:", ticker)
+    print("\n")
+    print("CALLBACK FIRED")
+    print("Ticker =", ticker)
 
     name = STOCKS.get(ticker, ticker)
 
     try:
         print("Calling get_stock_data...")
         df, r2, mae = get_stock_data(ticker)
-        print("Returned from get_stock_data")
 
     except Exception as e:
         print("ERROR:", str(e))
