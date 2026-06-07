@@ -352,8 +352,8 @@ def register_all_callbacks(app):
     def run_comparison(n, t1, t2):
         ef = empty_compare_figure()
 
-        # if not n:
-        #     return [], ef, ef, ef, ef, ef, "Select two stocks and click Compare →"
+        if not n:
+            return [], ef, ef, ef, ef, ef, "Select two stocks and click Compare →"
 
         if not t1 or not t2:
             return [], ef, ef, ef, ef, ef, "⚠️ Please select both stocks!"
