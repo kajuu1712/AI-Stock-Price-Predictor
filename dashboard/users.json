@@ -1,0 +1,43 @@
+{
+  "kajal": {
+    "password": "3f45dd39757b885a6688910f4960157a533a959023f3bede56df699b5799b333",
+    "portfolio": [
+      {
+        "id": "20260605202620",
+        "stock": "TCS.NS",
+        "shares": 4.0,
+        "buy_price": 120.0,
+        "date": "2026-06-05",
+        "type": "BUY"
+      }
+    ],
+    "history": [
+      {
+        "id": "20260605143217",
+        "stock": "AAPL",
+        "shares": 5.0,
+        "buy_price": 180.0,
+        "date": "2026-06-05",
+        "type": "BUY"
+      },
+      {
+        "id": "20260605143217",
+        "stock": "AAPL",
+        "shares": 5.0,
+        "buy_price": 180.0,
+        "sell_price": 311.23,
+        "profit": 656.15,
+        "date": "2026-06-05",
+        "type": "SELL"
+      },
+      {
+        "id": "20260605202620",
+        "stock": "TCS.NS",
+        "shares": 4.0,
+        "buy_price": 120.0,
+        "date": "2026-06-05",
+        "type": "BUY"
+      }
+    ]
+  }
+}
