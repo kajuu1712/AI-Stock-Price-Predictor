@@ -3,7 +3,7 @@ services:
     name: ai-stock-predictor
     env: python
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
-    startCommand: python -m gunicorn "dashboard.app:server" --chdir /opt/render/project/src
+    startCommand: python -m gunicorn start:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
