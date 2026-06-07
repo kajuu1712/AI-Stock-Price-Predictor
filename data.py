@@ -41,7 +41,14 @@ def calculate_macd(series, fast=12, slow=26, signal=9):
 # ── Download + Train for any Stock ───────────
 def get_stock_data(ticker):
     print(f"Downloading: {ticker}")
-    df = yf.download(ticker, period="10y", progress=False, threads=False)
+    df = yf.download(
+        ticker,
+        period="10y",
+        progress=False,
+        threads=False,
+        auto_adjust=True,
+        actions=False
+    )
 
     if df.empty:
         raise Exception(f"No data for {ticker}")
@@ -88,7 +95,14 @@ def get_stock_data(ticker):
 # ── Get Latest Price Only ────────────────────
 def get_latest_price(ticker):
     try:
-        df = yf.download(ticker, period="5d", progress=False, threads=False)
+        df = yf.download(
+            ticker,
+            period="5d",
+            progress=False,
+            threads=False,
+            auto_adjust=True,
+            actions=False
+        )
         if df.empty:
             return None
         if isinstance(df.columns, pd.MultiIndex):
