@@ -7,8 +7,9 @@ import json
 import os
 import hashlib
 
-# Path to users file — same folder as this script
-USERS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "users.json")
+# Path to users file 
+BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
+USERS_FILE = os.path.join(BASE_DIR, "users.json")
 
 # ── Load all users ───────────────────────────
 def load_users():
